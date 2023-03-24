@@ -1,0 +1,39 @@
+package:
+  id: v4l-utils
+  name: v4l-utils
+  version: 1.20.0
+  kind: lib
+  description: |
+    v4l-utils.
+
+base:
+  id: org.deepin.base
+  version: 20.5.0
+
+depends:
+- id: qtbase
+  version: 5.11.3.15
+
+source:
+  kind: git
+  url: https://github.com/deepin-community/v4l-utils.git
+  version: 1.20
+  commit: e083a77c87a4cdc6a22d6ce3135507dbba8d4b53
+
+  patch:
+  - dont-gererate-treeview.diff
+variables:
+  extra_args: |
+    --disable-doxygen-man \
+    --disable-doxygen-ps \
+    --disable-doxygen-pdf \
+    --disable-qvidcap \
+    --disable-silent-rules \
+    --with-libv4lconvertsubdir=libv4lconvert0
+
+build:
+  kind: autotools
+  manual:
+    configure: |
+      ./bootstrap.sh
+      ./configure ${conf_args} ${extra_args}
